@@ -1,5 +1,18 @@
 body {
-  background-color: blue;
+  background-color: whitesmoke;
+}
+
+table {
+  border: 4px solid black;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+}
+
+#flag-button {
+  background-color: red;
 }
 
 /*# sourceMappingURL=styles.css.map */

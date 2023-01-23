@@ -3,17 +3,57 @@ $color: whitesmoke;
 
 body {
     background-color: $color;
+    text-align: center;
 }
 
-table {
-    border: 4px solid black;
-}
+#game{
+    height: max-content;
+    width: max-content;
+    margin: auto;
+    padding: 5px;
+    background-color: lightgray;
 
-button {
-    height: 100%;
-    width: 100%;
-}
+    #game-header {
 
-#flag-button{
-    background-color: red;
+        font-size: 20px;
+        margin-bottom: 5px;
+
+        #remaining-mines {
+            margin-right: 0;
+        }
+
+        #flag-button{
+            background-color: red;
+            margin-left: 20px;
+            margin-right: 20px;
+            height: 30px;
+            
+        }
+
+        #time {
+            margin-left: 0;
+        }
+    }
+    
+    #game-table {
+        button {
+            padding: 5px;
+            font-weight: bold;
+            background-color: gray;
+        }
+    
+        button:disabled{
+            color: black;
+        }
+    
+        table {
+            border: 2px solid black;
+            table-layout: fixed;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: auto;
+            background-color: lightgray;
+        }
+    }
+    
 }

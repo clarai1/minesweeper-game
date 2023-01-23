@@ -1,27 +1,26 @@
-const rows = 15;
-const columns = 10;
-const size_cell = 30
-
 class Cell{
     constructor(row, column){
         this.row = row;
         this.column = column;
         this.covered = true;
-        this.number = 0; // if number === -1 -> it is a bomb
+        this.number = 0; // if number === -1 -> it is a mine
         this.flag = false;
     }
 }
 
 class MineweeperGame{
-    constructor(rows, columns, size_cell, number_bombs){
+    constructor(rows, columns, size_cell, number_mines){
         this.rows = rows;
         this.columns = columns;
         this.size_cell = size_cell;
-        this.number_bombs = number_bombs;
+        this.number_mines = number_mines;
         this.flagButton = false;
         this.table = new Object(); // dict with keys 'i,j' for each cell.
         this.tableIsGenerated = false;
         this.uncovered_cells = 0;
+        this.remaining_mines = number_mines;
+        this.flagEmoji = '&#128681';
+        this.bombEmoji = '&#128163';
     }
 
     /**
@@ -31,11 +30,8 @@ class MineweeperGame{
      * The table in MinesweeperGame is an Object with string keys: 'i,j'.
      */
     createTable() {
-        let body = document.querySelector('body');
+        let body = document.querySelector('#game-table');
         let table = document.createElement('table');
-
-        table.style.height = `${this.size_cell * this.rows}px`;
-        table.style.width = `${this.size_cell * this.columns}px`;
 
         for (let i = 1; i <= this.rows; i ++){
             let tr = document.createElement('tr');
@@ -46,6 +42,8 @@ class MineweeperGame{
                 let td = document.createElement('td');
                 tr.append(td);
                 let button = document.createElement('button');
+                button.style.height = `${this.size_cell}px`;
+                button.style.width = `${this.size_cell}px`;
                 button.id = `pos${i}-${j}`;
                 td.style.width = `${this.size_cell}`;
                 tr.style.height = `${this.size_cell}`;
@@ -57,7 +55,7 @@ class MineweeperGame{
             }
         }
         body.append(table);
-    };
+    }
 
     /**
      * Given a cell position i,j returns all possible adjancent cells in a list
@@ -86,36 +84,38 @@ class MineweeperGame{
     }
 
     /**
-     * Initializes Minesweeper table cells, first picks random places for the bombs, 
-     * ensuring no bomb is in the i,j position or in adjacent neighborhood,
-     * then insert the correct number of adjacent bombs in each cell. 
+     * Initializes Minesweeper table cells, first picks random places for the mines, 
+     * ensuring no mine is in the i,j position or in adjacent neighborhood,
+     * then insert the correct number of adjacent mines in each cell. 
      * @param {number} i Row of starting cell
      * @param {number} j Column of starting cell
      */
     start(i,j) {
-        let bombs = []
+        let mines = []
         let initial_cells = this.getAdjacents(i,j);
         initial_cells.push(this.table[`${i},${j}`]);
-        console.log(initial_cells);
 
-        while (bombs.length < this.number_bombs){
+        while (mines.length < this.number_mines){
             let l = Math.floor(Math.random() * (this.rows)) + 1;
             let k = Math.floor(Math.random() * (this.columns)) + 1;
             let cell = this.table[`${l},${k}`]
-            if (!bombs.includes(cell) && !initial_cells.includes(cell)) {
+            if (!mines.includes(cell) && !initial_cells.includes(cell)) {
                 cell.number = -1;
-                bombs.push(cell);
+                mines.push(cell);
             }
         }  
 
-        bombs.forEach( bomb => {
-            let adjacents = this.getAdjacents(bomb.row,bomb.column)
+        mines.forEach( mine => {
+            let adjacents = this.getAdjacents(mine.row,mine.column)
             adjacents.forEach(cell =>{
                 if (cell.number !== -1) {
                     cell.number++;
                 }
             });
         });
+
+        // Start timer
+        interval = setInterval(count, 1000);
     }
 
     play(i,j) {
@@ -139,7 +139,7 @@ class MineweeperGame{
                 }
             });
         }
-        if (this.uncovered_cells === this.rows * this.columns - this.number_bombs) {
+        if (this.uncovered_cells === this.rows * this.columns - this.number_mines) {
             return this.endGame(true);
         }
     }
@@ -175,10 +175,13 @@ class MineweeperGame{
         if (cell.flag) {
             cell.flag = false;
             cell_html.innerHTML = '';
+            this.remaining_mines++;
         } else {
             cell.flag = true;
-            cell_html.innerHTML = 'F';
+            cell_html.innerHTML = this.flagEmoji;
+            this.remaining_mines--;
         }
+        document.querySelector('#remaining-mines').innerHTML = `${this.remaining_mines}`;
     }
 
     /**
@@ -204,7 +207,7 @@ class MineweeperGame{
      */
     uncover(i,j){
         let cell = this.table[`${i},${j}`];
-        let cell_id = document.querySelector(`#pos${i}-${j}`);
+        let cell_html = document.querySelector(`#pos${i}-${j}`);
         if (cell.flag){
             return;
         }
@@ -212,8 +215,12 @@ class MineweeperGame{
             return this.endGame(false);
         }
         cell.covered = false;
+        // Here we uncover a cell, change styles:
         this.uncovered_cells++;
-        cell_id.innerHTML = cell.number;
+        cell_html.innerHTML = cell.number;
+        cell_html.style.color = this.color(cell.number);
+        cell_html.style.backgroundColor = 'lightgray';
+
         if (cell.number === 0) {
             let adjacents = this.getAdjacents(i,j);
             adjacents.forEach(cell => {
@@ -225,28 +232,59 @@ class MineweeperGame{
     }
 
     /**
+     * Given integer x, returns color desired in string format.
+     * @param {number} x 
+     */
+    color(x){
+        switch (x){
+            case 1: 
+                return 'blue';
+            case 2:
+                return 'green';
+            case 3: 
+                return 'red';
+            case 4:
+                return 'darkblue';
+            case 5: 
+                return 'darkgreen';
+            case 6:
+                return 'pink';
+            case 7:
+                return 'violet';
+            case 8: 
+                return 'yellow';
+        }
+    }
+
+    /**
      * If win is true, then the player won, else game over.
      * @param {boolean} result 
      */
     endGame(win){
+        clearInterval(interval);
         this.show_numbers();
-        let result = document.createElement('h2')
+        let result = document.createElement('h2');
         if (win){
-            result.innerHTML = 'Congratulations, you won!'
+            result.innerHTML = 'Congratulations, you won!';
         } else {
-            result.innerHTML = 'Game Over!'
+            result.innerHTML = 'Game Over!';
         }
-        document.querySelector('body').append(result)
-    }
+        document.querySelector('body').append(result);
+        document.querySelectorAll('#game-table button').forEach(button =>{
+            button.disabled = true;
+        });
 
+    }
 
     show_numbers(){
         Object.values(this.table).forEach(cell => {
             let cell_id = `#pos${cell.row}-${cell.column}`
             if (cell.number !== -1){
-                document.querySelector(cell_id).innerHTML = `${cell.number}`;
+                let cell_html = document.querySelector(cell_id);
+                cell_html.innerHTML = `${cell.number}`;
+                cell_html.style.color = this.color(cell.number);
             } else {
-                document.querySelector(cell_id).innerHTML = 'b';
+                document.querySelector(cell_id).innerHTML = this.bombEmoji;
             }
         });
     }
@@ -255,11 +293,30 @@ class MineweeperGame{
 
 const ROWS = 15;
 const COLS = 10;
-const SIZE_CELLS = 40;
-const BOMBS = 20
+const SIZE_CELLS = 30;
+const NUMBER_MINES = 20;
+
+// Variables to store the time, the interval will be started when playing the first cell
+// and will be stopped when the game ends.
+var time = 0;
+var interval;
+
+/**
+ * Function to count the time of the game.
+ */
+function count(){
+    time += 1;
+    minutes = Math.floor(time / 60)
+    seconds = time % 60
+    document.querySelector('#minutes').innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+    document.querySelector('#seconds').innerHTML = seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
-    let game = new MineweeperGame(ROWS,COLS,SIZE_CELLS,BOMBS);
+    let game = new MineweeperGame(ROWS,COLS,SIZE_CELLS,NUMBER_MINES);
+
+    document.querySelector('#remaining-mines').innerHTML = `${game.remaining_mines}`;
     game.createTable();
 
     Object.values(game.table).forEach(cell => {
@@ -278,4 +335,9 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('#flag-button').focus();
         game.flagToggle();
     });
+
+    document.querySelector('#new-game').addEventListener("click", function() {
+        location.reload();
+    });
+
 });

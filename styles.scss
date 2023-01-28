@@ -37,9 +37,11 @@ body {
     
     #game-table {
         button {
-            padding: 5px;
             font-weight: bold;
+            font-size: 90%;
             background-color: gray;
+            display: block;
+            padding: 0;
         }
     
         button:disabled{

@@ -27,9 +27,11 @@ body {
   margin-left: 0;
 }
 #game #game-table button {
-  padding: 5px;
   font-weight: bold;
+  font-size: 90%;
   background-color: gray;
+  display: block;
+  padding: 0;
 }
 #game #game-table button:disabled {
   color: black;

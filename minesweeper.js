@@ -42,11 +42,10 @@ class MineweeperGame{
                 let td = document.createElement('td');
                 tr.append(td);
                 let button = document.createElement('button');
-                button.style.height = `${this.size_cell}px`;
-                button.style.width = `${this.size_cell}px`;
+                button.setAttribute('style', `height: ${this.size_cell}px; width: ${this.size_cell}px; font-size: ${this.size_cell - 10}px;`)
                 button.id = `pos${i}-${j}`;
-                td.style.width = `${this.size_cell}`;
-                tr.style.height = `${this.size_cell}`;
+                td.style.width = `${this.size_cell}px`;
+                tr.style.height = `${this.size_cell}px`;
                 button.innerHTML = '';
                 td.append(button);
 
@@ -293,7 +292,7 @@ class MineweeperGame{
 
 const ROWS = 15;
 const COLS = 10;
-const SIZE_CELLS = 30;
+const SIZE_CELLS =60;
 const NUMBER_MINES = 20;
 
 // Variables to store the time, the interval will be started when playing the first cell

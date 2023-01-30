@@ -58,6 +58,33 @@ body {
             margin: auto;
             background-color: $color-uncovered-cells;
         }
+
+        /* Cross wrong flags at end of game */
+        .crossed-out {
+            /*Found in https://stackoverflow.com/a/42737232/21044513 */
+            position: relative;
+            display: inline-block;
+
+            &::before,
+            &::after {
+            content: '';
+            width: 110%;
+            position: absolute;
+            left: -2px;
+            top: 45%;
+            opacity: 0.7;
+            }
+            &::before {
+            border-bottom: 2px solid black;
+            -webkit-transform: skewY(-45deg);
+            transform: skewY(-45deg);
+            }
+            &::after {
+            border-bottom: 2px solid black;
+            -webkit-transform: skewY(45deg);
+            transform: skewY(45deg);
+            }
+        }
     }
 
     #game-bottom {
@@ -76,29 +103,10 @@ body {
     
 }
 
-/* Cross wrong flags at end of game */
-.crossed-out {
-    /*Found in https://stackoverflow.com/a/42737232/21044513 */
-    position: relative;
-    display: inline-block;
+#options-content{
+    display: none;
+}
 
-    &::before,
-    &::after {
-      content: '';
-      width: 110%;
-      position: absolute;
-      left: -2px;
-      top: 45%;
-      opacity: 0.7;
-    }
-    &::before {
-      border-bottom: 2px solid black;
-      -webkit-transform: skewY(-45deg);
-      transform: skewY(-45deg);
-    }
-    &::after {
-      border-bottom: 2px solid black;
-      -webkit-transform: skewY(45deg);
-      transform: skewY(45deg);
-    }
-  }
+#help-content{
+    display: none;
+}

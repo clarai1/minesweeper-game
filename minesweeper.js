@@ -8,7 +8,12 @@ class Cell{
     }
 }
 
-class MineweeperGame{
+// Variables to store the time, the interval starts when playing the first cell
+// and stops when the game ends.
+
+let interval;
+
+class MinesweeperGame{
     constructor(rows, columns, size_cell, number_mines){
         this.rows = rows;
         this.columns = columns;
@@ -21,6 +26,7 @@ class MineweeperGame{
         this.remaining_mines = number_mines;
         this.flagEmoji = '&#128681';
         this.bombEmoji = '&#128163';
+        this.time = 0;
     }
 
     /**
@@ -114,7 +120,7 @@ class MineweeperGame{
         });
 
         // Start timer
-        interval = setInterval(count, 1000);
+        interval = setInterval(this.count.bind(this), 1000);
     }
 
     play(i,j) {
@@ -291,55 +297,15 @@ class MineweeperGame{
         });
     }
 
+    /**
+     * Function to count the time of the game.
+     */
+    count(){
+        this.time++;
+        let minutes = Math.floor(this.time / 60)
+        let seconds = this.time % 60
+        document.querySelector('#minutes').innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+        document.querySelector('#seconds').innerHTML = seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+    }
+
 }
-
-const ROWS = 15;
-const COLS = 10;
-const SIZE_CELLS =30;
-const NUMBER_MINES = 20;
-
-// Variables to store the time, the interval starts when playing the first cell
-// and stops when the game ends.
-var time = 0;
-var interval;
-
-/**
- * Function to count the time of the game.
- */
-function count(){
-    time += 1;
-    minutes = Math.floor(time / 60)
-    seconds = time % 60
-    document.querySelector('#minutes').innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
-    document.querySelector('#seconds').innerHTML = seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let game = new MineweeperGame(ROWS,COLS,SIZE_CELLS,NUMBER_MINES);
-
-    document.querySelector('#remaining-mines').innerHTML = `${game.remaining_mines}`;
-    game.createTable();
-
-    Object.values(game.table).forEach(cell => {
-        let cell_id = `#pos${cell.row}-${cell.column}`;
-
-        document.querySelector(cell_id).addEventListener("click", function() {
-            game.play(cell.row, cell.column);
-        });
-    });
-    
-    document.querySelector('#flag-button').addEventListener("click", function() {
-        game.flagToggle();
-    });
-
-    document.addEventListener('keypress', function() {
-        document.querySelector('#flag-button').focus();
-        game.flagToggle();
-    });
-
-    document.querySelector('#new-game').addEventListener("click", function() {
-        location.reload();
-    });
-
-});

@@ -26,6 +26,9 @@ body {
 #game #game-header #time {
   margin-left: 0;
 }
+#game #game-table {
+  /* Cross wrong flags at end of game */
+}
 #game #game-table button {
   font-weight: bold;
   font-size: 90%;
@@ -44,6 +47,29 @@ body {
   margin: auto;
   background-color: lightgray;
 }
+#game #game-table .crossed-out {
+  /*Found in https://stackoverflow.com/a/42737232/21044513 */
+  position: relative;
+  display: inline-block;
+}
+#game #game-table .crossed-out::before, #game #game-table .crossed-out::after {
+  content: "";
+  width: 110%;
+  position: absolute;
+  left: -2px;
+  top: 45%;
+  opacity: 0.7;
+}
+#game #game-table .crossed-out::before {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(-45deg);
+  transform: skewY(-45deg);
+}
+#game #game-table .crossed-out::after {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(45deg);
+  transform: skewY(45deg);
+}
 #game #game-bottom {
   margin-top: 5px;
 }
@@ -57,29 +83,12 @@ body {
   background-color: lightgray;
 }
 
-/* Cross wrong flags at end of game */
-.crossed-out {
-  /*Found in https://stackoverflow.com/a/42737232/21044513 */
-  position: relative;
-  display: inline-block;
+#options-content {
+  display: none;
 }
-.crossed-out::before, .crossed-out::after {
-  content: "";
-  width: 110%;
-  position: absolute;
-  left: -2px;
-  top: 45%;
-  opacity: 0.7;
-}
-.crossed-out::before {
-  border-bottom: 2px solid black;
-  -webkit-transform: skewY(-45deg);
-  transform: skewY(-45deg);
-}
-.crossed-out::after {
-  border-bottom: 2px solid black;
-  -webkit-transform: skewY(45deg);
-  transform: skewY(45deg);
+
+#help-content {
+  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -211,6 +211,7 @@ class MineweeperGame{
             return;
         }
         if (cell.number === -1){
+            cell_html.style.backgroundColor = 'red';
             return this.endGame(false);
         }
         cell.covered = false;
@@ -278,11 +279,13 @@ class MineweeperGame{
     show_numbers(){
         Object.values(this.table).forEach(cell => {
             let cell_id = `#pos${cell.row}-${cell.column}`
-            if (cell.number !== -1){
-                let cell_html = document.querySelector(cell_id);
+            let cell_html = document.querySelector(cell_id);
+            if (cell.number !== -1 && !cell.flag){
                 cell_html.innerHTML = `${cell.number}`;
                 cell_html.style.color = this.color(cell.number);
-            } else {
+            } else if (cell.number !== -1 && cell.flag){
+                cell_html.className = 'crossed-out';
+            } else if (cell.number === -1 && !cell.flag){
                 document.querySelector(cell_id).innerHTML = this.bombEmoji;
             }
         });
@@ -292,11 +295,11 @@ class MineweeperGame{
 
 const ROWS = 15;
 const COLS = 10;
-const SIZE_CELLS =60;
+const SIZE_CELLS =30;
 const NUMBER_MINES = 20;
 
-// Variables to store the time, the interval will be started when playing the first cell
-// and will be stopped when the game ends.
+// Variables to store the time, the interval starts when playing the first cell
+// and stops when the game ends.
 var time = 0;
 var interval;
 

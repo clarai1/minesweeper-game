@@ -44,5 +44,42 @@ body {
   margin: auto;
   background-color: lightgray;
 }
+#game #game-bottom {
+  margin-top: 5px;
+}
+#game #game-bottom button {
+  background-color: gray;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 30px;
+}
+#game #game-bottom button:hover {
+  background-color: lightgray;
+}
+
+/* Cross wrong flags at end of game */
+.crossed-out {
+  /*Found in https://stackoverflow.com/a/42737232/21044513 */
+  position: relative;
+  display: inline-block;
+}
+.crossed-out::before, .crossed-out::after {
+  content: "";
+  width: 110%;
+  position: absolute;
+  left: -2px;
+  top: 45%;
+  opacity: 0.7;
+}
+.crossed-out::before {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(-45deg);
+  transform: skewY(-45deg);
+}
+.crossed-out::after {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(45deg);
+  transform: skewY(45deg);
+}
 
 /*# sourceMappingURL=styles.css.map */

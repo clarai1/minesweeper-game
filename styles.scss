@@ -1,8 +1,10 @@
 
-$color: whitesmoke;
+$color-background: whitesmoke;
+$color-covered-cells: gray;
+$color-uncovered-cells: lightgray;
 
 body {
-    background-color: $color;
+    background-color: $color-background;
     text-align: center;
 }
 
@@ -11,7 +13,7 @@ body {
     width: max-content;
     margin: auto;
     padding: 5px;
-    background-color: lightgray;
+    background-color: $color-uncovered-cells;
 
     #game-header {
 
@@ -39,7 +41,7 @@ body {
         button {
             font-weight: bold;
             font-size: 90%;
-            background-color: gray;
+            background-color: $color-covered-cells;
             display: block;
             padding: 0;
         }
@@ -54,8 +56,49 @@ body {
             border-spacing: 0;
             border-collapse: collapse;
             margin: auto;
-            background-color: lightgray;
+            background-color: $color-uncovered-cells;
+        }
+    }
+
+    #game-bottom {
+        margin-top: 5px;
+        button {
+            background-color: $color-covered-cells;
+            margin-left: 10px;
+            margin-right: 10px;
+            height: 30px;
+        }
+
+        button:hover{
+            background-color: $color-uncovered-cells;
         }
     }
     
 }
+
+/* Cross wrong flags at end of game */
+.crossed-out {
+    /*Found in https://stackoverflow.com/a/42737232/21044513 */
+    position: relative;
+    display: inline-block;
+
+    &::before,
+    &::after {
+      content: '';
+      width: 110%;
+      position: absolute;
+      left: -2px;
+      top: 45%;
+      opacity: 0.7;
+    }
+    &::before {
+      border-bottom: 2px solid black;
+      -webkit-transform: skewY(-45deg);
+      transform: skewY(-45deg);
+    }
+    &::after {
+      border-bottom: 2px solid black;
+      -webkit-transform: skewY(45deg);
+      transform: skewY(45deg);
+    }
+  }

@@ -1,7 +1,7 @@
 /* Default values: */
 
 if (!localStorage.getItem('size_cells')) {
-    localStorage.setItem('size_cells', 30);
+    localStorage.setItem('size_cells', 25);
 }
 
 if (!localStorage.getItem('difficulty')) {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Create eventListener for each cell, to call function play
     Object.values(game.table).forEach(cell => {
-        let cell_id = `#pos${cell.row}-${cell.column}`;
+        let cell_id = `[data-row='${cell.row}'][data-col='${cell.column}']`;
 
         document.querySelector(cell_id).addEventListener("click", function() {
             game.play(cell.row, cell.column);

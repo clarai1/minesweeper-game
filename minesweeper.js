@@ -48,7 +48,9 @@ class MinesweeperGame{
                 let td = document.createElement('td');
                 tr.append(td);
                 let button = document.createElement('button');
-                button.setAttribute('style', `height: ${this.size_cell}px; width: ${this.size_cell}px;font-size: ${this.size_cell / 2}px;`)
+                button.setAttribute('style', `height: ${this.size_cell}px; width: ${this.size_cell}px;font-size: ${this.size_cell / 2}px;`);
+                button.dataset.row = i;
+                button.dataset.col = j;
                 button.id = `pos${i}-${j}`;
                 button.innerHTML = '';
                 td.append(button);
@@ -171,7 +173,7 @@ class MinesweeperGame{
      */
     flag(i,j) {
         let cell = this.table[`${i},${j}`];
-        let cell_html = document.querySelector(`#pos${i}-${j}`);
+        let cell_html = document.querySelector(`[data-row='${i}'][data-col='${j}']`);
         if (!cell.covered){
             return;
         }
@@ -210,7 +212,7 @@ class MinesweeperGame{
      */
     uncover(i,j){
         let cell = this.table[`${i},${j}`];
-        let cell_html = document.querySelector(`#pos${i}-${j}`);
+        let cell_html = document.querySelector(`[data-row='${i}'][data-col='${j}']`);
         if (cell.flag){
             return;
         }
@@ -283,7 +285,7 @@ class MinesweeperGame{
 
     show_numbers(){
         Object.values(this.table).forEach(cell => {
-            let cell_id = `#pos${cell.row}-${cell.column}`
+            let cell_id = `[data-row='${cell.row}'][data-col='${cell.column}']`;
             let cell_html = document.querySelector(cell_id);
             if (cell.number !== -1 && !cell.flag){
                 cell_html.innerHTML = `${cell.number}`;

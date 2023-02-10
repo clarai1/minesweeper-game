@@ -153,12 +153,12 @@ class MinesweeperGame{
     flagToggle(){
         if (this.flagButton) {
             this.flagButton = false;
-            let flagButton_html = document.querySelector('#flag-button');
+            let flagButton_html = document.querySelector('.flag-button');
             flagButton_html.classList.add("crossed-out");
             flagButton_html.style.backgroundColor = "red";
         } else {
             this.flagButton = true;
-            let flagButton_html = document.querySelector('#flag-button');
+            let flagButton_html = document.querySelector('.flag-button');
             flagButton_html.classList.remove("crossed-out");
             flagButton_html.style.backgroundColor = "green";
         }
@@ -268,6 +268,7 @@ class MinesweeperGame{
         clearInterval(interval);
         this.show_numbers();
         let result = document.createElement('h2');
+        result.id = 'result';
         if (win){
             result.innerHTML = 'Congratulations, you won!';
         } else {

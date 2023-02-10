@@ -14,7 +14,7 @@
             <div id="game-header">
                 <span id="remaining-mines"></span>
     
-                <button id="flag-button" class="crossed-out">&#128681</button>
+                <button class="flag-button crossed-out">&#128681</button>
     
                 <span id="time">
                     <span id="minutes">00</span>:<span id="seconds">00</span>
@@ -25,13 +25,53 @@
         </div>
 
         <div id="options-content">
-            <label class="form-label">Size of cells:</label>
-            <input type="range" class="form-range" min="15" max="50" step="5" id="size-cells">
-            <button disabled id="sample-cell"></button>
+            <div id="size-cells-settings">
+                <label class="form-label">Size of cells:</label>
+                <input type="range" class="form-range" min="15" max="50" step="5" id="size-cells">
+                <button disabled id="sample-cell"></button>
+            </div>
+
+            <div id="difficulty-settings">
+                <label class="form-label">Difficulty level:</label>
+                <input type="range" class="form-range" min="1" max="3" step="1" id="difficulty">
+                <output>1</output>
+            </div>
         </div>
 
         <div id="help-content">
-            How to play:
+            <h5>The game</h5>
+            <p>
+                Every cell is covered at the beginning, and you can uncover them by clicking on them.
+                Every cell can either be safe and contain a number or contain a mine.
+                <br>
+                If you uncover a cell containing a mine, you lose the game. 
+                <br>
+                If you uncover a safe cell, it contains a number that corresponds to the number of
+                mines present in the eight adjacent cells. 
+                <br>
+                To start to play, click on any cell, the first
+                cell you choose will always be safe.
+                <br>
+                The goal of the game is to uncover all safe cells in the shortest time possible.
+
+            </p>
+            <h5>Flags</h5>
+            <p>
+                If you think there is a mine under a cell, you can place a flag &#128681 on it.
+                <br>
+                This can be done by clicking on the flag button <button class="flag-button crossed-out">&#128681</button> on top of the table or by clicking any 
+                letter on the keyboard.
+                <br>
+                When the flag button is green <button class="flag-button" style="background-color: green;">&#128681</button>,  you can click on any cell to place/remove a flag,
+                without uncovering it.
+                <br>
+                When the flag button is red, clicking on any cell without a flag will uncover it.
+            </p>
+            <h5>Tips</h5>
+            <p>
+                If the number of flags adjacent to an uncovered cell is greater or equal to the number contained
+                in the cell, clicking on the uncovered cell will uncover all its adjacent cells without a flag.
+            </p>
         </div>
 
         <div id="bottom">

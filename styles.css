@@ -1,23 +1,16 @@
 body {
   text-align: center;
-  width: max-content;
   margin: auto;
   margin-top: 20px;
   background-color: lightgray;
 }
 
-#game {
-  max-width: fit-content;
-  border: 2px solid black;
-  margin: auto;
-  /* Cross wrong flags at end of game */
-}
-#game .crossed-out {
+/* Cross wrong flags at end of game */
+.crossed-out {
   /*Found in https://stackoverflow.com/a/42737232/21044513 */
   position: relative;
-  display: block;
 }
-#game .crossed-out::before, #game .crossed-out::after {
+.crossed-out::before, .crossed-out::after {
   content: "";
   width: 100%;
   position: absolute;
@@ -25,15 +18,21 @@ body {
   top: 45%;
   opacity: 0.7;
 }
-#game .crossed-out::before {
+.crossed-out::before {
   border-bottom: 2px solid black;
   -webkit-transform: skewY(-45deg);
   transform: skewY(-45deg);
 }
-#game .crossed-out::after {
+.crossed-out::after {
   border-bottom: 2px solid black;
   -webkit-transform: skewY(45deg);
   transform: skewY(45deg);
+}
+
+#game {
+  max-width: fit-content;
+  border: 2px solid black;
+  margin: auto;
 }
 #game #game-header {
   width: 100%;
@@ -41,13 +40,6 @@ body {
   font-size: 20px;
   display: inline-grid;
   grid-template-columns: 60px auto 60px;
-}
-#game #game-header #flag-button {
-  background-color: red;
-  height: 30px;
-  width: 30px;
-  font-size: 15px;
-  margin: auto;
 }
 #game #game-table button {
   font-weight: bold;
@@ -67,31 +59,49 @@ body {
   background-color: lightgray;
 }
 
+.flag-button {
+  background-color: red;
+  height: 30px;
+  width: 30px;
+  font-size: 15px;
+  margin: auto;
+}
+
 #options-content {
   display: none;
-  background-color: lightgray;
-  width: 50%;
+  width: 350px;
   margin: auto;
   margin-top: 30px;
 }
-#options-content input {
-  width: 50%;
-  float: right;
+#options-content #size-cells-settings {
+  height: 50px;
+  display: grid;
+  grid-template-columns: 150px 150px 50px;
+  gap: 10px;
 }
-#options-content #sample-cell {
-  display: inline-block;
+#options-content #size-cells-settings #sample-cell {
   background-color: gray;
+}
+#options-content #difficulty-settings {
+  height: 50px;
+  display: grid;
+  grid-template-columns: 150px 150px 50px;
+  gap: 10px;
 }
 
 #help-content {
   display: none;
+  text-align: left;
+  width: 60%;
+  margin: auto;
 }
 
 #bottom {
+  display: grid;
+  grid-template-columns: 100px 150px 100px;
+  width: 350px;
+  margin: auto;
   margin-top: 10px;
-  display: inline-grid;
-  grid-template-columns: 100px auto 100px;
-  width: 100%;
 }
 #bottom button {
   background-color: gray;

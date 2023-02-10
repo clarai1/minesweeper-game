@@ -1,37 +1,56 @@
 body {
-  background-color: whitesmoke;
   text-align: center;
+  width: max-content;
+  margin: auto;
+  margin-top: 20px;
+  background-color: lightgray;
 }
 
 #game {
-  height: max-content;
-  width: max-content;
+  max-width: fit-content;
+  border: 2px solid black;
   margin: auto;
-  padding: 5px;
-  background-color: lightgray;
+  /* Cross wrong flags at end of game */
+}
+#game .crossed-out {
+  /*Found in https://stackoverflow.com/a/42737232/21044513 */
+  position: relative;
+  display: block;
+}
+#game .crossed-out::before, #game .crossed-out::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  left: -1px;
+  top: 45%;
+  opacity: 0.7;
+}
+#game .crossed-out::before {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(-45deg);
+  transform: skewY(-45deg);
+}
+#game .crossed-out::after {
+  border-bottom: 2px solid black;
+  -webkit-transform: skewY(45deg);
+  transform: skewY(45deg);
 }
 #game #game-header {
+  width: 100%;
+  text-align: center;
   font-size: 20px;
-  margin-bottom: 5px;
-}
-#game #game-header #remaining-mines {
-  margin-right: 0;
+  display: inline-grid;
+  grid-template-columns: 60px auto 60px;
 }
 #game #game-header #flag-button {
   background-color: red;
-  margin-left: 20px;
-  margin-right: 20px;
   height: 30px;
-}
-#game #game-header #time {
-  margin-left: 0;
-}
-#game #game-table {
-  /* Cross wrong flags at end of game */
+  width: 30px;
+  font-size: 15px;
+  margin: auto;
 }
 #game #game-table button {
   font-weight: bold;
-  font-size: 90%;
   background-color: gray;
   display: block;
   padding: 0;
@@ -40,55 +59,48 @@ body {
   color: black;
 }
 #game #game-table table {
-  border: 2px solid black;
+  margin: 0;
+  border-top: 2px solid black;
   table-layout: fixed;
   border-spacing: 0;
   border-collapse: collapse;
-  margin: auto;
-  background-color: lightgray;
-}
-#game #game-table .crossed-out {
-  /*Found in https://stackoverflow.com/a/42737232/21044513 */
-  position: relative;
-  display: inline-block;
-}
-#game #game-table .crossed-out::before, #game #game-table .crossed-out::after {
-  content: "";
-  width: 110%;
-  position: absolute;
-  left: -2px;
-  top: 45%;
-  opacity: 0.7;
-}
-#game #game-table .crossed-out::before {
-  border-bottom: 2px solid black;
-  -webkit-transform: skewY(-45deg);
-  transform: skewY(-45deg);
-}
-#game #game-table .crossed-out::after {
-  border-bottom: 2px solid black;
-  -webkit-transform: skewY(45deg);
-  transform: skewY(45deg);
-}
-#game #game-bottom {
-  margin-top: 5px;
-}
-#game #game-bottom button {
-  background-color: gray;
-  margin-left: 10px;
-  margin-right: 10px;
-  height: 30px;
-}
-#game #game-bottom button:hover {
   background-color: lightgray;
 }
 
 #options-content {
   display: none;
+  background-color: lightgray;
+  width: 50%;
+  margin: auto;
+  margin-top: 30px;
+}
+#options-content input {
+  width: 50%;
+  float: right;
+}
+#options-content #sample-cell {
+  display: inline-block;
+  background-color: gray;
 }
 
 #help-content {
   display: none;
+}
+
+#bottom {
+  margin-top: 10px;
+  display: inline-grid;
+  grid-template-columns: 100px auto 100px;
+  width: 100%;
+}
+#bottom button {
+  background-color: gray;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 30px;
+}
+#bottom button:hover {
+  background-color: lightgray;
 }
 
 /*# sourceMappingURL=styles.css.map */

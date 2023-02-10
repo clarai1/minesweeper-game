@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link href="styles.css" rel="stylesheet">
         <meta name="viewport" content="initial-scale=1, width=device-width">
         <script src="minesweeper.js"></script>
@@ -13,7 +14,7 @@
             <div id="game-header">
                 <span id="remaining-mines"></span>
     
-                <button id="flag-button">Flag is Off</button>
+                <button id="flag-button" class="crossed-out">&#128681</button>
     
                 <span id="time">
                     <span id="minutes">00</span>:<span id="seconds">00</span>
@@ -21,21 +22,24 @@
             </div>
     
             <div id="game-table"></div>
-    
-            <div id="game-bottom">
-                <button id="options"> Options </button>
-                <button id="new-game">New Game</button>
-                <button id="help">Help</button>
-            </div>
         </div>
 
         <div id="options-content">
-
+            <label class="form-label">Size of cells:</label>
+            <input type="range" class="form-range" min="15" max="50" step="5" id="size-cells">
+            <button disabled id="sample-cell"></button>
         </div>
 
         <div id="help-content">
             How to play:
         </div>
+
+        <div id="bottom">
+            <button id="options"> Options </button>
+            <button id="new-game">New Game</button>
+            <button id="help">Help</button>
+        </div>
+
     </body>
 </html>
 

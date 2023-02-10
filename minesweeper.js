@@ -48,10 +48,8 @@ class MinesweeperGame{
                 let td = document.createElement('td');
                 tr.append(td);
                 let button = document.createElement('button');
-                button.setAttribute('style', `height: ${this.size_cell}px; width: ${this.size_cell}px; font-size: ${this.size_cell - 10}px;`)
+                button.setAttribute('style', `height: ${this.size_cell}px; width: ${this.size_cell}px;font-size: ${this.size_cell / 2}px;`)
                 button.id = `pos${i}-${j}`;
-                td.style.width = `${this.size_cell}px`;
-                tr.style.height = `${this.size_cell}px`;
                 button.innerHTML = '';
                 td.append(button);
 
@@ -156,12 +154,12 @@ class MinesweeperGame{
         if (this.flagButton) {
             this.flagButton = false;
             let flagButton_html = document.querySelector('#flag-button');
-            flagButton_html.innerHTML = 'Flag is Off';
+            flagButton_html.classList.add("crossed-out");
             flagButton_html.style.backgroundColor = "red";
         } else {
             this.flagButton = true;
             let flagButton_html = document.querySelector('#flag-button');
-            flagButton_html.innerHTML = 'Flag is On';
+            flagButton_html.classList.remove("crossed-out");
             flagButton_html.style.backgroundColor = "green";
         }
     }
@@ -275,7 +273,7 @@ class MinesweeperGame{
         } else {
             result.innerHTML = 'Game Over!';
         }
-        document.querySelector('body').append(result);
+        document.querySelector('body').prepend(result);
         document.querySelectorAll('#game-table button').forEach(button =>{
             button.disabled = true;
         });

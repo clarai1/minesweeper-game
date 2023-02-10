@@ -1,9 +1,12 @@
 /* Default values: */
 
-const ROWS = 15;
-const COLS = 10;
-const SIZE_CELLS = 30;
-const NUMBER_MINES = 20;
+if (!localStorage.getItem('size_cells')) {
+    localStorage.setItem('size_cells', 30);
+}
+var ROWS = 15;
+var COLS = 10;
+const SIZE_CELLS = localStorage.getItem('size_cells');
+var NUMBER_MINES = 20;
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -38,4 +41,24 @@ document.addEventListener("DOMContentLoaded", function() {
         location.reload();
     });
 
+    document.querySelector('#options').addEventListener("click", function() {
+        document.querySelector('#options-content').style.display = 'block';
+        document.querySelector('#help-content').style.display = 'none';
+        document.querySelector('#game').style.display = 'none';
+    });
+
+    document.querySelector('#help').addEventListener("click", function() {
+        document.querySelector('#help-content').style.display = 'block';
+        document.querySelector('#options-content').style.display = 'none';
+        document.querySelector('#game').style.display = 'none';
+    });
+
+
+    // Options are set, then new game is uploaded. 
+    document.querySelector("#sample-cell").setAttribute("style", `height: ${localStorage.getItem('size_cells')}px; width: ${localStorage.getItem('size_cells')}px;`);
+    document.querySelector("#size-cells").addEventListener("change", (event) => {
+        let new_size = event.target.value;
+        document.querySelector("#sample-cell").setAttribute("style", `height:${new_size}px; width:${new_size}px;`);
+        localStorage.setItem("size_cells", new_size);
+    });
 });

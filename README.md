@@ -2,6 +2,8 @@
 
 A classic minesweeper game implemented with JavaScript, HTML and CSS, with a simple design. It is based on a single-page application, a new game starts when the page is reloaded.
 
+[Here](https://clarai1.github.io/minesweeper-game/) you can play the game.
+
 There are essentially three parts: the game, the options and the help page.
 
 ## The game

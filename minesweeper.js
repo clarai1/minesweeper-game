@@ -14,13 +14,15 @@ class Cell{
 let interval;
 
 class MinesweeperGame{
+    #table;
+    
     constructor(rows, columns, size_cell, number_mines){
         this.rows = rows;
         this.columns = columns;
         this.size_cell = size_cell;
         this.number_mines = number_mines;
         this.flagButton = false;
-        this.table = new Object(); // dict with keys 'i,j' for each cell.
+        this.#table = new Object(); // dict with keys 'i,j' for each cell.
         this.tableIsGenerated = false;
         this.uncovered_cells = 0;
         this.remaining_mines = number_mines;
@@ -56,7 +58,7 @@ class MinesweeperGame{
                 td.append(button);
 
                 // Create Cell object in table
-                this.table[`${i},${j}`] = new Cell(i,j)
+                this.#table[`${i},${j}`] = new Cell(i,j)
             }
         }
         body.append(table);
@@ -73,16 +75,16 @@ class MinesweeperGame{
         let arr = [-1, 1];
         arr.forEach(k => {
             if (1 <= i + k && i + k <= this.rows) {
-                adjacents.push(this.table[`${i+k},${j}`]);
+                adjacents.push(this.#table[`${i+k},${j}`]);
             }
             if (1 <= j + k && j + k <= this.columns) {
-                adjacents.push(this.table[`${i},${j+k}`]);
+                adjacents.push(this.#table[`${i},${j+k}`]);
             }
             if (1 <= i + k && i + k <= this.rows && 1 <= j + k && j + k <= this.columns) {
-                adjacents.push(this.table[`${i+k},${j+k}`]);
+                adjacents.push(this.#table[`${i+k},${j+k}`]);
             }
             if (1 <= i - k && i - k <= this.rows && 1 <= j + k && j + k <= this.columns) {
-                adjacents.push(this.table[`${i-k},${j+k}`]);
+                adjacents.push(this.#table[`${i-k},${j+k}`]);
             }
         });
         return adjacents;
@@ -98,12 +100,12 @@ class MinesweeperGame{
     start(i,j) {
         let mines = []
         let initial_cells = this.getAdjacents(i,j);
-        initial_cells.push(this.table[`${i},${j}`]);
+        initial_cells.push(this.#table[`${i},${j}`]);
 
         while (mines.length < this.number_mines){
             let l = Math.floor(Math.random() * (this.rows)) + 1;
             let k = Math.floor(Math.random() * (this.columns)) + 1;
-            let cell = this.table[`${l},${k}`]
+            let cell = this.#table[`${l},${k}`]
             if (!mines.includes(cell) && !initial_cells.includes(cell)) {
                 cell.number = -1;
                 mines.push(cell);
@@ -128,7 +130,7 @@ class MinesweeperGame{
             this.tableIsGenerated = true;
             this.start(i,j);
         }
-        let cell = this.table[`${i},${j}`]
+        let cell = this.#table[`${i},${j}`]
 
         if (cell.covered) {
             if (this.flagButton) {
@@ -172,7 +174,7 @@ class MinesweeperGame{
      * @param {number} j 
      */
     flag(i,j) {
-        let cell = this.table[`${i},${j}`];
+        let cell = this.#table[`${i},${j}`];
         let cell_html = document.querySelector(`[data-row='${i}'][data-col='${j}']`);
         if (!cell.covered){
             return;
@@ -211,7 +213,7 @@ class MinesweeperGame{
      * @param {number} j 
      */
     uncover(i,j){
-        let cell = this.table[`${i},${j}`];
+        let cell = this.#table[`${i},${j}`];
         let cell_html = document.querySelector(`[data-row='${i}'][data-col='${j}']`);
         if (cell.flag){
             return;
@@ -284,7 +286,7 @@ class MinesweeperGame{
     }
 
     show_numbers(){
-        Object.values(this.table).forEach(cell => {
+        Object.values(this.#table).forEach(cell => {
             let cell_id = `[data-row='${cell.row}'][data-col='${cell.column}']`;
             let cell_html = document.querySelector(cell_id);
             if (cell.number !== -1 && !cell.flag){

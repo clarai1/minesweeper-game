@@ -33,8 +33,6 @@ switch (localStorage.getItem('difficulty')) {
 
 const SIZE_CELLS = localStorage.getItem('size_cells');
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
 
     // Create new game
@@ -45,14 +43,12 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('#remaining-mines').innerHTML = `${game.remaining_mines}`;
 
     // Create eventListener for each cell, to call function play
-    Object.values(game.table).forEach(cell => {
-        let cell_id = `[data-row='${cell.row}'][data-col='${cell.column}']`;
-
-        document.querySelector(cell_id).addEventListener("click", function() {
-            game.play(cell.row, cell.column);
-        });
+    document.querySelectorAll('#game-table button').forEach(button => {
+        button.addEventListener('click', function() {
+            game.play(parseInt(button.dataset.row), parseInt(button.dataset.col))
+        })
     });
-    
+
     // Two ways to toggle flag button
     document.querySelector('#game-header .flag-button').addEventListener("click", function() {
         game.flagToggle();
